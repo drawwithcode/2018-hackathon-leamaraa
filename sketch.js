@@ -1,5 +1,5 @@
-// var mySong;
-var inc = 0.1;
+var mySong;
+var inc = 0.01;
 var scl = 10;
 var cols;
 var rows;
@@ -10,60 +10,66 @@ var fr;
 
 var particles = [];
 
+var flowfield;
+
 function preload() {
-  // mySong = loadSound("./assets/dark.mp3");
+  mySong = loadSound("./assets/dark.mp3");
 }
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-
-  // mySong.play();
-  // mySong.setVolume(0.5);
-
+  mySong.play();
+  mySong.setVolume(0.5);
+  amp = new p5.Amplitude();
   cols = floor(width / scl);
   rows = floor(height / scl);
   fr = createP('');
-  for (var i = 0; i <100, i++) {
-  particles[i] = new Particle();
- }
 
+flowfield = new Array (cols * rows);
+
+for (var i = 0; i<800 ; i++ ){
+  particles[i] = new Particle();
+
+}
+  background(0);
 }
 
 function draw() {
-  background(255);
+    console.log(frameCount);
+
   var yoff = 0;
   for (var y = 0; y < rows; y++) {
     var xoff = 0;
-    for (var x = 0; x < cols; x++) {
-      var index = (x + y * width) * 4;
-      var angle = noise(xoff, yoff, zoff) * TWO_PI;
-      var v = p5.Vector.fromAngle(random(angle));
-      xoff += inc;
+    for (var x = 0; x < cols; x++){
+        var index = x + y * cols;
 
-      stroke(0);
-
-      push();
-      translate(x * scl, y * scl);
-      rotate(v.heading());
-      // line(0, 0, scl, 0);
-
-      pop();
-    }
-
-    yoff += inc;
-
-    zoff += 0.001;
+        var angle = noise(xoff, yoff, zoff) * TWO_PI *4;
+        var v = p5.Vector.fromAngle(angle);
+        v.setMag (amp * 100);
+        flowfield[index] = v;
+        xoff += inc;
+        stroke(0, 50);
+        // push();
+        // translate(x * scl, y * scl);
+        // rotate(v.heading());
+        // strokeWeight(2);
+        // line(0, 0, scl, 0);
+        // pop();
+      }
+      yoff += inc;
+      zoff += 0.01;
   }
 
- for (var i; i < particles.length; i ++){
-  particles[i].update();
-  particles[i].show();
-  particles[i].edges();
-}
-  fr.html(floor(frameRate()));
-}
+  for (var i=0;i < particles.length; i++){
 
+particles[i].follow(flowfield);
+particles[i].update();
+particles[i].show();
+particles[i].edges();
 
+}
+  // fr.html(floor(frameRate())) ;
+}
 
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
