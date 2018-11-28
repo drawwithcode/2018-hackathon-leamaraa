@@ -4,7 +4,7 @@ var scl = 10;
 var cols;
 var rows;
 
-//perché non ti carichi
+//prova 2
 
 var zoff = 0;
 
