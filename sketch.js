@@ -1,4 +1,4 @@
-// var mySong;
+var mySong;
 var inc = 0.01;
 var scl = 10;
 var cols;
