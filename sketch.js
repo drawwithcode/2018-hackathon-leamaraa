@@ -4,6 +4,8 @@ var scl = 10;
 var cols;
 var rows;
 
+//perché non ti carichi
+
 var zoff = 0;
 
 var fr;
