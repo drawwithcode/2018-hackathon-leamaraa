@@ -27,8 +27,8 @@ this.follow = function (vectors){
   this.show = function() {
     stroke(255, 50);
     strokeWeight(1);
-    line(this.pos.x, this.pos.y, this.prevPos.x, this.prevPos.y);
-    // point(this.pos.x, this.pos.y);
+    // line(this.pos.x, this.pos.y, this.prevPos.x, this.prevPos.y);
+    point(this.pos.x, this.pos.y);
   }
 
   this.edges = function(){
